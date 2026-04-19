@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/UserPanel/Views/Shared/_Layout.cshtml";
+}
+
+@model AndShop.Core.Entities.User;
+
+<div>
+    <div class="myaccount-content">
+        <h4 class="title">Profile</h4>
+        <div class="login_form_container">
+            <div class="account_details_form">
+                <form action="#">
+                    <div class="default-form-box mb-20">
+                        <label>First Name</label>
+                        <input type="text" name="first-name" class="form-control" value="@Model.Name"
+                               readonly>
+                    </div>
+                    <div class="default-form-box mb-20">
+                        <label>Last Name</label>
+                        <input type="text" name="last-name" class="form-control" value="@Model.Surname"
+                               readonly>
+                    </div>
+                    <div class="default-form-box mb-20">
+                        <label>Email</label>
+                        <input type="text" name="email-name" value="@Model.Email"
+                               class="form-control" readonly>
+                    </div>
+                    <div class="default-form-box mb-20">
+                        <label>Phone Number</label>
+                        <input type="number" name="birthday" value="@Model.PhoneNumber"
+                               class="form-control" readonly>
+                    </div>                    
+                    <div class="save_button mt-3">
+                        <a href="/UserPanel/Account/UpdateProfile"
+                           class="theme-btn-one bg-black btn_sm">Edit</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

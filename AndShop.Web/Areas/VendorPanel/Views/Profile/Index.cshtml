@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/VendorPanel/Views/Shared/_Layout.cshtml";
+}
+
+@model AndShop.Core.Entities.Vendor;
+
+<div>
+    <div class="vendors_profiles">
+        <h4>Profile</h4>
+        <ul>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Company Name:</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.CompanyName</h4>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Email Address:</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.Email</h4>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Address</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.Address</h4>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Year Established:</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.EstablishedYear</h4>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Total Employees:</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.TotalEmployees</h4>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="profils_details_vendor">
+                    <div class="profile_left">
+                        <h4>Category:</h4>
+                    </div>
+                    <div class="profile_right">
+                        <h4>@Model.Category</h4>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="btn_left_table">
+            <a href="account-info-edit.html" class="theme-btn-one bg-black btn_sm">
+                Edit
+                Profile
+            </a>
+        </div>
+    </div>
+</div>

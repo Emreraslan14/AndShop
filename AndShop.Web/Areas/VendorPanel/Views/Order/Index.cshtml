@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/VendorPanel/Views/Shared/_Layout.cshtml";
+}
+
+@model List<AndShop.Core.ViewModels.UserProductOrderVm>;
+
+<div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="vendor_order_boxed">
+                <h4>All Order</h4>
+                <div class="table-responsive">
+                    <table class="table pending_table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Order No</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>                                
+                                <th scope="col">Customer</th>                                
+                                <th scope="col">Shipping Address</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var num = 1;
+                                foreach(var vm in Model)
+                                {
+                                    <tr>
+                                        <td scope="row">#@num</td>
+                                        <td>@vm.Product.Name</td>
+                                        <td>@vm.Order.TotalPrice</td>
+                                        <td>@vm.User.Name @vm.User.Surname</td>
+                                        <td>@vm.User.Address</td>
+                                    </tr>
+                                    num++;
+                                }
+                            }                          
+                        </tbody>
+                    </table>
+                </div>
+                <div class="btn_right_table">
+                    <a href="add-product.html" class="theme-btn-one bg-black btn_sm">
+                        Add
+                        Product
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
