@@ -4,12 +4,15 @@ using Andshop.DataAccess.Repos.Abstract;
 using Andshop.DataAccess.Repos.Concrete;
 using AndShop.Services.Abstract;
 using AndShop.Services.Concrete;
+using AndShop.Services.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -27,6 +30,8 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ProductOrderService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.Configure<AdminSettings>(builder.Configuration.GetSection("AdminSettings"));
 
 builder.Services.AddSingleton(typeof(IGenericRepo<Product>), serviceProvider =>
 {
@@ -80,8 +85,7 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-	//Environment.GetEnvironmentVariable("CONSTR")
-	opt.UseSqlServer("Data Source=89.252.183.170\\MSSQLSERVER2019;Initial Catalog=emrerasl_andshop;user id=emrerasl_an01;password=D910l9iv?;TrustServerCertificate=True;");
+	opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }, ServiceLifetime.Transient, ServiceLifetime.Transient);
 
 

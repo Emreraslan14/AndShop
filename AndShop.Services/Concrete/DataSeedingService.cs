@@ -1,5 +1,7 @@
-﻿using AndShop.Core.Entities;
+using AndShop.Core.Entities;
+using AndShop.Services.Settings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace AndShop.Services.Concrete
 {
@@ -7,49 +9,42 @@ namespace AndShop.Services.Concrete
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly AdminSettings _adminSettings;
 
-        public DataSeedingService(RoleManager<Role> roleManager, UserManager<User> userManager)
+        public DataSeedingService(RoleManager<Role> roleManager, UserManager<User> userManager, IOptions<AdminSettings> adminSettings)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _adminSettings = adminSettings.Value;
         }
 
         public async Task SeedRolesAsync()
         {
             var roles = new[] { "Admin", "Vendor", "Member" };
-            if (roles.Length > 0)
+            foreach (var roleName in roles)
             {
-                foreach (var roleName in roles)
+                if (!await _roleManager.RoleExistsAsync(roleName))
                 {
-                    if (!await _roleManager.RoleExistsAsync(roleName))
-                    {
-                        var newRole = new Role { Name = roleName };
-                        await _roleManager.CreateAsync(newRole);
-                    }
+                    await _roleManager.CreateAsync(new Role { Name = roleName });
                 }
             }
         }
 
         public async Task SeedAdminUserAsync()
         {
-            string email = "admin@admin.com";
-            string password = "Test1234.";
-            string address = "AdminAdress";
-            string name = "Admin";
-            string surname = "Admin";
-
-            if (await _userManager.FindByEmailAsync(email) == null)
+            if (await _userManager.FindByEmailAsync(_adminSettings.Email) == null)
             {
-                var user = new User();
-                user.Name = name;
-                user.UserName = email;
-                user.Email = email;
-                user.Address = address;
-                user.Surname = surname;
-                user.EmailConfirmed = true;
+                var user = new User
+                {
+                    Name = "Admin",
+                    UserName = _adminSettings.Email,
+                    Email = _adminSettings.Email,
+                    Address = "AdminAdress",
+                    Surname = "Admin",
+                    EmailConfirmed = true
+                };
 
-                await _userManager.CreateAsync(user, password);
-
+                await _userManager.CreateAsync(user, _adminSettings.Password);
                 await _userManager.AddToRoleAsync(user, "Admin");
             }
         }
