@@ -19,6 +19,7 @@ namespace AndShop.Web.Controllers
         private readonly IMailService _mailService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
+        
         public HomeController(IProductService productService , IHttpContextAccessor contextAccessor, IOrderService orderService, UserManager<User> userManager, ICategoryService categoryService, ProductOrderService productOrderService, IMailService mailService, IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
